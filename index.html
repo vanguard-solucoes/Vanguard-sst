@@ -1,0 +1,618 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --black: #0E0E0E;
+  --white: #F5F2EC;
+  --red: #D13B2A;
+  --red-dark: #A52D1E;
+  --red-light: #F5DDD9;
+  --yellow: #F0B429;
+  --yellow-light: #FEF6E4;
+  --gray: #6B6660;
+  --gray-light: #E8E4DE;
+  --ink: #1C1917;
+}
+
+body {
+  background: var(--white);
+  color: var(--ink);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+.hero {
+  background: var(--black);
+  color: var(--white);
+  padding: 0;
+  position: relative;
+  overflow: hidden;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.hero-noise {
+  position: absolute; inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+.hero-accent {
+  position: absolute;
+  top: -120px; right: -80px;
+  width: 480px; height: 480px;
+  background: radial-gradient(circle, rgba(209,59,42,0.18) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.hero-inner {
+  position: relative;
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 80px 32px 64px;
+}
+
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(209,59,42,0.15);
+  border: 1px solid rgba(209,59,42,0.35);
+  color: #EF8C7F;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 6px 14px;
+  border-radius: 2px;
+  margin-bottom: 32px;
+  animation: fadeUp 0.6s ease both;
+}
+
+.hero-badge::before {
+  content: '';
+  width: 6px; height: 6px;
+  background: #EF8C7F;
+  border-radius: 50%;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(0.8); }
+}
+
+.hero-h1 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(52px, 9vw, 88px);
+  line-height: 0.95;
+  letter-spacing: 0.01em;
+  margin-bottom: 28px;
+  animation: fadeUp 0.6s 0.1s ease both;
+}
+
+.hero-h1 em { font-style: normal; color: var(--red); }
+
+.hero-sub {
+  font-size: clamp(16px, 2.5vw, 20px);
+  color: rgba(245,242,236,0.72);
+  max-width: 560px;
+  line-height: 1.65;
+  margin-bottom: 40px;
+  font-weight: 300;
+  animation: fadeUp 0.6s 0.2s ease both;
+}
+
+.hero-sub strong { color: var(--white); font-weight: 500; }
+
+.hero-cta-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+  animation: fadeUp 0.6s 0.3s ease both;
+}
+
+.btn-primary {
+  display: inline-block;
+  background: var(--red);
+  color: var(--white);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  padding: 16px 36px;
+  border-radius: 2px;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.15s;
+  letter-spacing: 0.01em;
+}
+
+.btn-primary:hover { background: var(--red-dark); transform: translateY(-1px); }
+
+.hero-guarantee {
+  font-size: 12px;
+  color: rgba(245,242,236,0.45);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.hero-guarantee::before { content: '🔒'; font-size: 11px; }
+
+.hero-stats {
+  display: flex;
+  gap: 40px;
+  margin-top: 64px;
+  padding-top: 40px;
+  border-top: 1px solid rgba(245,242,236,0.1);
+  animation: fadeUp 0.6s 0.4s ease both;
+}
+
+.stat-num {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 36px;
+  color: var(--red);
+  line-height: 1;
+  margin-bottom: 4px;
+}
+
+.stat-label {
+  font-size: 12px;
+  color: rgba(245,242,236,0.5);
+  line-height: 1.4;
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.dor { background: var(--white); padding: 80px 32px; }
+.dor-inner { max-width: 780px; margin: 0 auto; }
+
+.section-eyebrow {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--red);
+  margin-bottom: 20px;
+}
+
+.dor-h2 {
+  font-family: 'DM Serif Display', serif;
+  font-size: clamp(28px, 4.5vw, 44px);
+  line-height: 1.15;
+  margin-bottom: 28px;
+  color: var(--ink);
+}
+
+.dor-h2 em { font-style: italic; color: var(--gray); }
+
+.dor-voz {
+  background: var(--black);
+  color: rgba(245,242,236,0.85);
+  border-radius: 3px;
+  padding: 28px 32px;
+  margin: 36px 0;
+  position: relative;
+  font-family: 'DM Serif Display', serif;
+  font-style: italic;
+  font-size: clamp(17px, 2.5vw, 21px);
+  line-height: 1.6;
+}
+
+.dor-voz::before {
+  content: '"';
+  font-size: 80px;
+  color: var(--red);
+  opacity: 0.3;
+  position: absolute;
+  top: -8px; left: 20px;
+  font-family: Georgia, serif;
+  line-height: 1;
+}
+
+.dor-voz cite {
+  display: block;
+  margin-top: 16px;
+  font-size: 12px;
+  font-style: normal;
+  font-family: 'DM Sans', sans-serif;
+  color: rgba(245,242,236,0.4);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.dor-list { list-style: none; display: flex; flex-direction: column; gap: 12px; margin: 32px 0; }
+
+.dor-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  font-size: 15px;
+  color: var(--ink);
+  line-height: 1.5;
+}
+
+.dor-list li::before {
+  content: '×';
+  color: var(--red);
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.3;
+  flex-shrink: 0;
+}
+
+.dor-close {
+  font-size: 17px;
+  font-weight: 500;
+  color: var(--ink);
+  border-left: 3px solid var(--red);
+  padding-left: 16px;
+  margin-top: 32px;
+  line-height: 1.5;
+}
+
+.produto { background: var(--black); color: var(--white); padding: 80px 32px; }
+.produto-inner { max-width: 780px; margin: 0 auto; }
+
+.produto-h2 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(40px, 7vw, 72px);
+  line-height: 0.95;
+  margin-bottom: 12px;
+}
+
+.produto-h2 span { color: var(--red); }
+
+.produto-desc {
+  font-size: 17px;
+  color: rgba(245,242,236,0.65);
+  max-width: 540px;
+  margin-bottom: 52px;
+  line-height: 1.6;
+  font-weight: 300;
+}
+
+.pecas-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; margin-bottom: 2px; }
+
+.peca-card {
+  background: rgba(245,242,236,0.04);
+  border: 1px solid rgba(245,242,236,0.08);
+  padding: 24px;
+  transition: background 0.2s;
+}
+
+.peca-card:hover { background: rgba(245,242,236,0.07); }
+.peca-card.full { grid-column: 1 / -1; }
+
+.peca-num { font-family: 'Bebas Neue', sans-serif; font-size: 13px; color: var(--red); letter-spacing: 0.08em; margin-bottom: 10px; }
+.peca-name { font-size: 15px; font-weight: 500; color: var(--white); margin-bottom: 6px; }
+.peca-desc { font-size: 13px; color: rgba(245,242,236,0.5); line-height: 1.55; }
+.peca-tag { display: inline-block; margin-top: 10px; font-size: 10px; font-weight: 500; letter-spacing: 0.07em; text-transform: uppercase; color: rgba(245,242,236,0.3); border: 1px solid rgba(245,242,236,0.12); padding: 3px 8px; border-radius: 2px; }
+
+.multas { background: var(--red); color: var(--white); padding: 64px 32px; }
+.multas-inner { max-width: 780px; margin: 0 auto; }
+
+.multas-h2 { font-family: 'Bebas Neue', sans-serif; font-size: clamp(32px, 5vw, 52px); line-height: 1; margin-bottom: 8px; }
+.multas-sub { font-size: 15px; color: rgba(245,242,236,0.75); margin-bottom: 36px; }
+.multas-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; }
+
+.multa-item { background: rgba(0,0,0,0.2); padding: 20px; }
+.multa-valor { font-family: 'Bebas Neue', sans-serif; font-size: 32px; color: var(--yellow); line-height: 1; margin-bottom: 6px; }
+.multa-item-name { font-size: 13px; color: rgba(245,242,236,0.75); line-height: 1.4; }
+.multas-nota { margin-top: 24px; font-size: 12px; color: rgba(245,242,236,0.5); }
+
+.oferta { background: var(--white); padding: 80px 32px; }
+.oferta-inner { max-width: 580px; margin: 0 auto; }
+.oferta-box { border: 2px solid var(--black); border-radius: 3px; overflow: hidden; }
+
+.oferta-header { background: var(--black); color: var(--white); padding: 28px 32px; text-align: center; }
+.oferta-pretitle { font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(245,242,236,0.45); margin-bottom: 8px; }
+.oferta-nome { font-family: 'Bebas Neue', sans-serif; font-size: 44px; color: var(--white); line-height: 1; }
+.oferta-nome span { color: var(--red); }
+
+.oferta-body { padding: 32px; }
+.oferta-inclui { font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--gray); margin-bottom: 16px; }
+
+.oferta-items { list-style: none; display: flex; flex-direction: column; gap: 10px; margin-bottom: 32px; }
+.oferta-items li { display: flex; align-items: flex-start; gap: 10px; font-size: 14px; color: var(--ink); line-height: 1.4; }
+.oferta-items li::before { content: '✓'; color: var(--red); font-weight: 700; font-size: 15px; line-height: 1.3; flex-shrink: 0; }
+
+.oferta-divider { border: none; border-top: 1px solid var(--gray-light); margin: 24px 0; }
+
+.preco-wrap { text-align: center; margin-bottom: 24px; }
+.preco-de { font-size: 14px; color: var(--gray); text-decoration: line-through; margin-bottom: 4px; }
+.preco-por { font-family: 'Bebas Neue', sans-serif; font-size: 64px; color: var(--ink); line-height: 1; }
+.preco-por span { font-size: 28px; vertical-align: top; margin-top: 12px; display: inline-block; }
+.preco-desc { font-size: 13px; color: var(--gray); margin-top: 6px; }
+
+.btn-oferta {
+  display: block; width: 100%;
+  background: var(--red); color: var(--white);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 16px; font-weight: 600;
+  padding: 18px 24px; border-radius: 2px;
+  text-align: center; border: none; cursor: pointer;
+  transition: background 0.2s, transform 0.15s;
+  letter-spacing: 0.01em; margin-bottom: 12px;
+}
+.btn-oferta:hover { background: var(--red-dark); transform: translateY(-1px); }
+
+.oferta-micro { text-align: center; font-size: 12px; color: var(--gray); line-height: 1.5; }
+
+.oferta-urgencia {
+  background: var(--yellow-light);
+  border: 1px solid rgba(240,180,41,0.3);
+  border-radius: 2px; padding: 12px 16px; margin-bottom: 20px;
+  font-size: 13px; color: #7A5800; text-align: center; font-weight: 500;
+}
+
+.objecoes { background: var(--gray-light); padding: 72px 32px; }
+.objecoes-inner { max-width: 780px; margin: 0 auto; }
+.objecoes-h2 { font-family: 'DM Serif Display', serif; font-size: clamp(24px, 3.5vw, 36px); margin-bottom: 36px; color: var(--ink); }
+.obj-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.obj-card { background: var(--white); border-radius: 2px; padding: 24px; }
+.obj-q { font-size: 13px; font-weight: 600; color: var(--gray); margin-bottom: 8px; font-style: italic; }
+.obj-a { font-size: 14px; color: var(--ink); line-height: 1.6; }
+
+.final { background: var(--black); color: var(--white); padding: 80px 32px; text-align: center; }
+.final-inner { max-width: 560px; margin: 0 auto; }
+.final-h2 { font-family: 'Bebas Neue', sans-serif; font-size: clamp(40px, 7vw, 68px); line-height: 0.95; margin-bottom: 20px; }
+.final-h2 em { color: var(--red); font-style: normal; }
+.final-sub { font-size: 16px; color: rgba(245,242,236,0.6); margin-bottom: 36px; font-weight: 300; }
+.footer-note { margin-top: 36px; font-size: 12px; color: rgba(245,242,236,0.25); line-height: 1.6; }
+
+@media (max-width: 560px) {
+  .pecas-grid { grid-template-columns: 1fr; }
+  .multas-grid { grid-template-columns: 1fr; }
+  .obj-grid { grid-template-columns: 1fr; }
+  .hero-stats { gap: 24px; flex-wrap: wrap; }
+}
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-noise"></div>
+  <div class="hero-accent"></div>
+  <div class="hero-inner">
+    <div class="hero-badge">Segurança do Trabalho · Para quem não tem SESMT</div>
+    <h1 class="hero-h1">
+      Você sabe que<br>
+      está <em>irregular.</em><br>
+      E o fiscal também<br>
+      vai saber.
+    </h1>
+    <p class="hero-sub">
+      O <strong>Diagnóstico Risco Zero</strong> mapeia em 30 minutos exatamente o que está errado na sua empresa — e te diz o que resolver primeiro, antes que a fiscalização chegue.
+    </p>
+    <div class="hero-cta-wrap">
+      <button class="btn-primary" onclick="document.querySelector('.oferta').scrollIntoView({behavior:'smooth'})">
+        Quero fazer o diagnóstico agora
+      </button>
+      <span class="hero-guarantee">Entrega em até 24h após o preenchimento</span>
+    </div>
+    <div class="hero-stats">
+      <div class="stat">
+        <div class="stat-num">R$6,7k</div>
+        <div class="stat-label">multa por item<br>autuado pelo MTE</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">7</div>
+        <div class="stat-label">peças incluídas<br>no diagnóstico</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">30min</div>
+        <div class="stat-label">para descobrir<br>o que está errado</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DOR -->
+<section class="dor">
+  <div class="dor-inner">
+    <p class="section-eyebrow">A situação que ninguém fala em voz alta</p>
+    <h2 class="dor-h2">
+      Você não está dormindo direito<br>
+      <em>por causa disso.</em>
+    </h2>
+
+    <div class="dor-voz">
+      "A empresa está há meses sem CIPA. O fiscal passou na empresa do concorrente semana passada. Sei que se vier aqui, para tudo. Preciso resolver, mas não sei nem por onde começar."
+      <cite>— o que donos de pequenas empresas pensam mas não falam</cite>
+    </div>
+
+    <p style="font-size:16px; color: var(--gray); margin-bottom: 20px;">Se você é dono de construtora, indústria ou frigorífico de pequeno porte, provavelmente:</p>
+
+    <ul class="dor-list">
+      <li>Sabe que está irregular em pelo menos um ponto, mas não sabe exatamente quais</li>
+      <li>Já tentou ler as NRs e desistiu — a linguagem é impossível para quem não é técnico</li>
+      <li>Não tem dinheiro nem faz sentido contratar um técnico de segurança fixo</li>
+      <li>Fica de olho em grupo de WhatsApp quando ouve falar de fiscal na região</li>
+      <li>Já viu algum colega do setor levar multa ou ter a empresa interditada</li>
+    </ul>
+
+    <p class="dor-close">
+      O problema não é falta de vontade de regularizar.<br>
+      É não saber o que, em que ordem e como — sem perder dias lendo norma técnica.
+    </p>
+  </div>
+</section>
+
+<!-- PRODUTO -->
+<section class="produto">
+  <div class="produto-inner">
+    <p class="section-eyebrow" style="color: rgba(245,242,236,0.4);">A solução</p>
+    <h2 class="produto-h2">Diagnóstico<br><span>Risco Zero</span></h2>
+    <p class="produto-desc">Um sistema de 7 peças que transforma a situação real da sua empresa em um plano de ação concreto — sem jargão, sem rodeio, sem generalização.</p>
+
+    <div class="pecas-grid">
+      <div class="peca-card">
+        <div class="peca-num">Peça 01</div>
+        <div class="peca-name">Formulário de diagnóstico</div>
+        <div class="peca-desc">18 perguntas sobre a situação real da sua empresa. Você responde em 8 minutos pelo celular e já começa a entender onde estão os buracos.</div>
+        <span class="peca-tag">Google Forms</span>
+      </div>
+      <div class="peca-card">
+        <div class="peca-num">Peça 02</div>
+        <div class="peca-name">Mapa de risco personalizado</div>
+        <div class="peca-desc">Visual único para a sua empresa: semáforo com os 10 itens mais autuados pelo MTE, mostrando o que está ok, o que está irregular e o que é urgente.</div>
+        <span class="peca-tag">PDF personalizado</span>
+      </div>
+      <div class="peca-card">
+        <div class="peca-num">Peça 03</div>
+        <div class="peca-name">Plano das 3 prioridades</div>
+        <div class="peca-desc">As 3 ações mais urgentes para a sua situação, em ordem. O quê fazer, por quê é crítico e como começar hoje — em linguagem de quem vai executar, não de norma técnica.</div>
+        <span class="peca-tag">PDF 2 páginas</span>
+      </div>
+      <div class="peca-card">
+        <div class="peca-num">Peça 04</div>
+        <div class="peca-name">Calculadora de exposição a multas</div>
+        <div class="peca-desc">Insira o número de funcionários e veja o valor exato das multas possíveis para cada item irregular. Sabe quanto você está arriscando agora? Essa planilha mostra.</div>
+        <span class="peca-tag">Google Sheets</span>
+      </div>
+      <div class="peca-card full">
+        <div class="peca-num">Peça 05 · 06 · 07</div>
+        <div class="peca-name">Biblioteca de modelos + Guia do fiscal + Checklist de véspera</div>
+        <div class="peca-desc">Modelos prontos das fichas que o fiscal mais pede (ficha de EPI, ata de CIPA, ordem de serviço). O roteiro real de uma fiscalização por setor. E um checklist para imprimir e deixar na gaveta para o dia que o fiscal aparecer sem avisar.</div>
+        <span class="peca-tag">Pasta Google Drive + PDFs</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MULTAS -->
+<section class="multas">
+  <div class="multas-inner">
+    <h2 class="multas-h2">O que você está<br>arriscando agora</h2>
+    <p class="multas-sub">Valores reais de multas do MTE por item autuado, sem contar interdição e processo trabalhista.</p>
+    <div class="multas-grid">
+      <div class="multa-item">
+        <div class="multa-valor">R$ 2.013</div>
+        <div class="multa-item-name">Sem CIPA ou Designado de Segurança<br><small style="opacity:0.6">NR-5</small></div>
+      </div>
+      <div class="multa-item">
+        <div class="multa-valor">R$ 4.026</div>
+        <div class="multa-item-name">EPI sem CA ou sem ficha assinada<br><small style="opacity:0.6">NR-6</small></div>
+      </div>
+      <div class="multa-item">
+        <div class="multa-valor">R$ 6.708</div>
+        <div class="multa-item-name">Máquina sem proteção NR-12<br><small style="opacity:0.6">NR-12 — por equipamento</small></div>
+      </div>
+      <div class="multa-item">
+        <div class="multa-valor">R$ 3.014</div>
+        <div class="multa-item-name">Trabalho em altura sem treinamento<br><small style="opacity:0.6">NR-35</small></div>
+      </div>
+      <div class="multa-item">
+        <div class="multa-valor">R$ 4.026</div>
+        <div class="multa-item-name">PGR ou PCMSO desatualizado<br><small style="opacity:0.6">NR-1 / NR-7</small></div>
+      </div>
+      <div class="multa-item">
+        <div class="multa-valor">empresa<br>parada</div>
+        <div class="multa-item-name">Interdição por risco grave e imediato<br><small style="opacity:0.6">qualquer NR crítica</small></div>
+      </div>
+    </div>
+    <p class="multas-nota">* Valores de referência baseados na tabela de multas do MTE. O valor final pode ser multiplicado pelo número de funcionários afetados.</p>
+  </div>
+</section>
+
+<!-- OFERTA -->
+<section class="oferta">
+  <div class="oferta-inner">
+    <p class="section-eyebrow" style="text-align:center; margin-bottom: 24px;">O investimento</p>
+    <div class="oferta-box">
+      <div class="oferta-header">
+        <p class="oferta-pretitle">Produto completo</p>
+        <div class="oferta-nome">Diagnóstico<br><span>Risco Zero</span></div>
+      </div>
+      <div class="oferta-body">
+        <div class="oferta-urgencia">
+          ⚡ Vagas limitadas por semana — diagnóstico entregue em até 24h
+        </div>
+        <p class="oferta-inclui">O que está incluído</p>
+        <ul class="oferta-items">
+          <li>Formulário de diagnóstico personalizado (18 perguntas)</li>
+          <li>Mapa de risco da sua empresa com semáforo de conformidade</li>
+          <li>Plano das 3 ações prioritárias com passo a passo de execução</li>
+          <li>Calculadora de exposição a multas com seus números reais</li>
+          <li>Biblioteca com 5 modelos prontos (ficha EPI, ata CIPA e mais)</li>
+          <li>Guia "O que o fiscal verifica" — roteiro real por setor</li>
+          <li>Checklist de véspera para imprimir e guardar na gaveta</li>
+        </ul>
+        <hr class="oferta-divider">
+        <div class="preco-wrap">
+          <p class="preco-de">De R$ 297</p>
+          <p class="preco-por"><span>R$</span>147</p>
+          <p class="preco-desc">pagamento único · acesso imediato ao formulário</p>
+        </div>
+        <button class="btn-oferta">Quero regularizar antes do fiscal chegar</button>
+        <p class="oferta-micro">Você paga → recebe o link do formulário → preenche → recebe seu diagnóstico completo em até 24h por email e WhatsApp.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- OBJEÇÕES -->
+<section class="objecoes">
+  <div class="objecoes-inner">
+    <h2 class="objecoes-h2">Perguntas que você provavelmente está fazendo</h2>
+    <div class="obj-grid">
+      <div class="obj-card">
+        <p class="obj-q">"Todo mundo na minha rua está irregular e nunca aconteceu nada."</p>
+        <p class="obj-a">O MTE fez mais de 178 mil fiscalizações em 2023, com foco crescente em pequenas empresas. A pergunta não é se vai acontecer — é quando. Quem regularizou antes não perde sono.</p>
+      </div>
+      <div class="obj-card">
+        <p class="obj-q">"Já paguei técnico de segurança e não adiantou nada."</p>
+        <p class="obj-a">O Diagnóstico Risco Zero não entrega papel — entrega um plano executável. Você sabe exatamente o que fazer, em que ordem, com os modelos prontos para preencher.</p>
+      </div>
+      <div class="obj-card">
+        <p class="obj-q">"Não tenho tempo para ler nada longo."</p>
+        <p class="obj-a">O formulário leva 8 minutos. O relatório que você recebe tem no máximo 6 páginas, escritas em linguagem de quem vai agir — sem norma técnica, sem juridiquês.</p>
+      </div>
+      <div class="obj-card">
+        <p class="obj-q">"Como eu sei que isso é para o meu tipo de empresa?"</p>
+        <p class="obj-a">O diagnóstico é personalizado com base nas suas respostas. Construtora, indústria ou frigorífico — o mapa e o plano são feitos para a sua situação específica, não para "empresas em geral".</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="final">
+  <div class="final-inner">
+    <h2 class="final-h2">
+      O fiscal não<br>
+      avisa que<br>
+      <em>está chegando.</em>
+    </h2>
+    <p class="final-sub">Mas você pode estar pronto quando ele chegar. 30 minutos de formulário hoje valem mais que semanas de dor de cabeça depois.</p>
+    <button class="btn-primary" style="font-size:16px; padding:18px 40px;" onclick="document.querySelector('.oferta').scrollIntoView({behavior:'smooth'})">
+      Fazer o diagnóstico agora — R$ 147
+    </button>
+    <p class="footer-note">
+      Diagnóstico Risco Zero · Entrega em até 24h<br>
+      Dúvidas? Fale por WhatsApp antes de comprar.
+    </p>
+  </div>
+</section>
+
+</body>
+</html>
